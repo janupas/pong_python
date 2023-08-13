@@ -16,6 +16,10 @@ class Paddle:
 	def draw(self):
 		pygame.draw.rect(self.surface, self.color, pygame.Rect(self.px, self.py, self.pw, self.ph))
 
+# Here the pong is a rectangle lol :)
+class Pong:
+	pass
+
 def main():
 	pygame.init()
 
@@ -40,12 +44,12 @@ def main():
 	left_paddle = Paddle(DISPLAY, WHITE, 0, 0, PADDLE_WIDTH, PADDLE_HEIGHT)
 	right_paddle = Paddle(DISPLAY, WHITE, WINDOW_WIDTH - PADDLE_WIDTH, 0, PADDLE_WIDTH, PADDLE_HEIGHT)
 
-	# Line in the middle of the screen
 
 	# Main game loop
 	while True:
 		# Clearing surface before frame render
 		DISPLAY.fill(BLACK)
+		# Line in the middle of the screen
 		pygame.draw.line(DISPLAY, WHITE, (WINDOW_WIDTH/2, 0), (WINDOW_WIDTH/2, WINDOW_HEIGHT), 1)
 
 		for event in pygame.event.get():
@@ -56,19 +60,23 @@ def main():
 			if event.type == KEYDOWN:
 				if event.key == pygame.K_UP:
 					# Right paddle up
-					right_paddle.py -= Paddle.pV
+					if right_paddle.py > 0:
+						right_paddle.py -= Paddle.pV
 
 				if event.key == pygame.K_DOWN:
 					# Right paddle down
-					right_paddle.py += Paddle.pV
+					if right_paddle.py + PADDLE_HEIGHT <= WINDOW_HEIGHT:
+						right_paddle.py += Paddle.pV
 
 				if event.key == pygame.K_w:
 					# Left paddle up
-					left_paddle.py -= Paddle.pV
+					if left_paddle.py > 0:
+						left_paddle.py -= Paddle.pV
 
 				if event.key == pygame.K_s:
 					# Left paddle down
-					left_paddle.py += Paddle.pV
+					if left_paddle.py + PADDLE_HEIGHT <= WINDOW_HEIGHT:
+						left_paddle.py += Paddle.pV
 		
 		left_paddle.draw()
 		right_paddle.draw()
